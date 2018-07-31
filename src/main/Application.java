@@ -2,17 +2,15 @@ package main;
 
 import institution.University;
 import institution.interlink.Internship;
-import person.Student;
+import person.providers.StudentsProvider;
+import person.providers.impl.ManualStudentsProvider;
 
 public class Application {
-    
-	public static void main(String[] args) {
-        University university = new University("CH.U.I.");
-        university.addStudent(new Student("Andrew Kostenko", 20));
-        university.addStudent(new Student("Julia Veselkina", 30));
-        university.addStudent(new Student("Maria Perechrest", 40));
-        university.addStudent(new Student("Ivan Veseliak", 50));
 
+    public static void main(String[] args) {
+        University university = new University("CH.U.I.");
+        StudentsProvider studentsProvider = new ManualStudentsProvider();
+        university.setStudents(studentsProvider.getStudents());
 
         Internship internship = new Internship("Interlink");
         internship.setStudents(university);
