@@ -4,6 +4,7 @@ import person.Student;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class University {
 
@@ -27,11 +28,19 @@ public class University {
     }
 
     public void setStudents(List<Student> students) {
-        this.students = students;
+        this.students = students.stream()
+                .filter(student -> hasStudentValidKnowledgeLevel(student.getKnowledgeLevel()))
+                .collect(Collectors.toList());
+    }
+
+    private boolean hasStudentValidKnowledgeLevel(int knowledgeLevel) {
+        return knowledgeLevel >= 0 && knowledgeLevel <= 100;
     }
 
     public void addStudent(Student student) {
-        students.add(student);
+        if (hasStudentValidKnowledgeLevel(student.getKnowledgeLevel())) {
+            students.add(student);
+        }
     }
 
 }
